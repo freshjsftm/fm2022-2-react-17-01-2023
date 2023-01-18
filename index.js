@@ -4,12 +4,12 @@
 class Heading extends React.Component {
   render() {
     console.log(this);
-    const {className, titleProps, children} = this.props;
+    const { className, titleProps, children } = this.props;
     return React.createElement(
       "h1",
-      { 
-        className: className, 
-        title: titleProps 
+      {
+        className: className,
+        title: titleProps,
       },
       "Hi! ",
       "React",
@@ -18,27 +18,37 @@ class Heading extends React.Component {
   }
 }
 
-class Counter extends React.Component{
+class Counter extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      count:0
-    }
+    this.state = { count: 0 };
+    // this.increment = this.increment.bind(this);
+    // this.decrement = this.decrement.bind(this);
   }
-  render(){
-    const {count} = this.state;
-    return React.createElement(React.Fragment, null, React.createElement('h2', null, count),
-    React.createElement('button', null, '+'),
-    React.createElement('button', null, '-'))
+  increment = () => {
+    //this.state.count++; //мутація - погана практика
+    this.setState({ count: this.state.count + 1 })
+    console.log("+", this.state.count);
+  };
+  decrement = () => {
+    //this.state.count--;
+    this.setState({ count: this.state.count - 1 })
+    console.log("-", this.state.count);
+  };
+  render() {
+    const { count } = this.state;
+    return React.createElement(
+      React.Fragment,
+      null,
+      React.createElement("h2", { className: "color" }, count),
+      React.createElement("button", { onClick: this.increment }, "+"),
+      React.createElement("button", { onClick: this.decrement }, "-")
+    );
   }
 }
 
+const child = React.createElement(Counter, {});
 const root = document.getElementById("root");
-// const container = ReactDOM.createRoot(root)
-// const child = React.createElement(Heading, {
-//   titleProps: "titleProps",
-//   className: "color",
-// }, 'Qwerrty', 'Brad');
-const child = React.createElement(Counter, {})
-//ReactDOM.createPortal(child, container);
-ReactDOM.render(child, root);
+//ReactDOM.render(child, root);
+const container = ReactDOM.createRoot(root);
+container.render(child);
